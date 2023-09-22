@@ -15,7 +15,7 @@ function handleSubmit(): void {
     </div>
 
     <form id="form" @submit="handleSubmit"
-         class="position-absolute top-50 start-50 d-flex flex-column justify-content-center align-items-center">
+         class="position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-center p-2 rounded-4">
         <div id="register-header">
             <h3 id="register-text">Registrieren</h3>
         </div>
@@ -42,15 +42,8 @@ function handleSubmit(): void {
 }
 
 #form {
-    transform: translate(-50%, -50%);
-
     width: 90vw;
     height: 200px;
-
-    box-sizing: border-box;
-    padding: 10px;
-
-    border-radius: 20px;
 
     background: rgba($dark-mode-1, 0.6);
     backdrop-filter: blur(3px);
