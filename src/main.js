@@ -5,6 +5,7 @@ import {createRouter, createWebHashHistory} from "vue-router";
 import RegisterView from "@/views/RegisterView.vue";
 import ScannerView from "@/views/ScannerView.vue";
 import App from "@/App.vue";
+import { createPinia } from "pinia";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -28,5 +29,6 @@ const router = createRouter({
 })
 
 const app = createApp(App);
+app.use(createPinia())
 app.use(router);
 app.mount('#app')
