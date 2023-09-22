@@ -14,7 +14,7 @@ function handleSubmit(): void {
         <h1 id="header-text" class="fw-semibold">Willkommen!</h1>
     </div>
 
-    <form id="form" @submit="handleSubmit"
+    <form id="form" @submit.prevent="handleSubmit"
          class="position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-center p-2 rounded-4">
         <div id="register-header">
             <h3 id="register-text">Registrieren</h3>
@@ -23,7 +23,7 @@ function handleSubmit(): void {
             <input id="input" class="form-control" type="text" placeholder="Dein Name:" v-model="name">
         </div>
         <div id="register-button">
-            <button id="button" type="submit" class="btn text-light btn-primary">Legen Sie los!</button>
+            <button id="button" type="submit" class="btn text-light btn-primary" @submit.prevent>Legen Sie los!</button>
         </div>
     </form>
 </template>
