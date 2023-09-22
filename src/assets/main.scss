@@ -3,6 +3,8 @@
 $primary: $dark-mode-blue;
 $light: $dark-mode-white;
 $white: $dark-mode-white;
+$danger: $custom-danger;
+$success: $custom-success;
 @import "node_modules/bootstrap/scss/bootstrap";
 
 html {
