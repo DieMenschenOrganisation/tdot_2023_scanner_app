@@ -1,4 +1,11 @@
-<script setup>
+<script setup lang="ts">
+import {ref, type Ref} from "vue";
+
+const name: Ref<string> = ref("");
+
+function handleSubmit(): void {
+    console.log("submit", name)
+}
 
 </script>
 
@@ -7,18 +14,18 @@
         <h1 id="header-text" class="fw-semibold">Willkommen!</h1>
     </div>
 
-    <div id="form"
+    <form id="form" @submit="handleSubmit"
          class="position-absolute top-50 start-50 d-flex flex-column justify-content-center align-items-center">
         <div id="register-header">
             <h3 id="register-text">Registrieren</h3>
         </div>
         <div id="name-input">
-            <input id="input" class="form-control" type="text" placeholder="Dein Name:">
+            <input id="input" class="form-control" type="text" placeholder="Dein Name:" v-model="name">
         </div>
         <div id="register-button">
-            <button id="button" class="btn text-light btn-primary w-50">Legen Sie los!</button>
+            <button id="button" type="submit" class="btn text-light btn-primary w-50">Legen Sie los!</button>
         </div>
-    </div>
+    </form>
 </template>
 
 <style scoped lang="scss">
@@ -26,6 +33,12 @@
 
 #register-header {
     height: 150px;
+}
+
+@media screen and (orientation:landscape) {
+    #register-header * {
+        display: none;
+    }
 }
 
 #form {
