@@ -23,7 +23,7 @@ function handleSubmit(): void {
             <input id="input" class="form-control" type="text" placeholder="Dein Name:" v-model="name">
         </div>
         <div id="register-button">
-            <button id="button" type="submit" class="btn text-light btn-primary w-50">Legen Sie los!</button>
+            <button id="button" type="submit" class="btn text-light btn-primary">Legen Sie los!</button>
         </div>
     </form>
 </template>
@@ -78,6 +78,7 @@ function handleSubmit(): void {
     #register-button {
         #button {
             height: 40px;
+            width: 90%;
 
             box-shadow: 5px 5px 5px rgba(#000, 0.25);
         }
