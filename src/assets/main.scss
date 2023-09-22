@@ -6,19 +6,15 @@ $white: $dark-mode-white;
 $danger: $custom-danger;
 $success: $custom-success;
 @import "node_modules/bootstrap/scss/bootstrap";
-
-html {
-    background: $dark-mode-0;
+html, body {
     overflow: hidden;
 }
 
 body {
-    height: 100dvh;
-    width: 100dvw;
-
-    background-image: url("@/assets/background.svg#svgView(preserveAspectRatio(none))");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+    background: $dark-mode-0 url("@/assets/background.svg") no-repeat fixed;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
     background-size: 100% 100%;
 
     border: 0;

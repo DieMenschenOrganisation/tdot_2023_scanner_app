@@ -26,9 +26,9 @@ function add() {
 
 <template>
     <main>
+        <ToastList></ToastList>
         <button id="btn" @click="add">add</button>
         <router-view></router-view>
-        <ToastList></ToastList>
     </main>
 </template>
 
