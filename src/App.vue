@@ -1,8 +1,13 @@
 <script setup>
 import {useToastStore} from "@/stores/toastStore";
 import ToastList from "@/components/ToastList.vue";
+import {onUnmounted} from "vue";
 
 useToastStore().startUpdater();
+
+onUnmounted(() => {
+    console.log(useToastStore().stopUpdater())
+})
 
 function add() {
     if (Math.random() > 0.5) {

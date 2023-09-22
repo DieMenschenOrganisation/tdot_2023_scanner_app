@@ -4,6 +4,7 @@ import {Notification} from "../data/notification";
 interface State {
     viewedNotifications: Notification[],
     scheduledNotifications: Notification[],
+    updaterID: number,
 }
 
 export const useToastStore = defineStore("toastStore", {
@@ -11,11 +12,15 @@ export const useToastStore = defineStore("toastStore", {
         return {
             viewedNotifications: [],
             scheduledNotifications: [],
+            updaterID: 0,
         }
     },
     actions: {
         startUpdater() {
-            setInterval(this.updateToasts, 500)
+            this.updaterID = setInterval(this.updateToasts, 500)
+        },
+        stopUpdater() {
+            clearInterval(this.updaterID);
         },
         addNotification(type: "info"|"error", message: string) {
             const notification: Notification = {
