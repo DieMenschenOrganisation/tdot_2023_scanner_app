@@ -8,7 +8,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const isError = computed(() => {
-    console.log(props.notification.type, props.notification.type == "error")
     return props.notification.type == "error";
 })
 </script>
