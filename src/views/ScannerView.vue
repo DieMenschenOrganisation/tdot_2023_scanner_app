@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import {computed, ComputedRef, ref, Ref} from "vue";
+import {ref, Ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
 import { QrcodeStream } from 'vue-qrcode-reader'
 
 const toastStore = useToastStore();
 
 const isChecked: Ref<boolean> = ref(false);
-
-const scannerText: ComputedRef<string> = computed((): string => {
-    return isChecked.value ? "Toggle to deactivate scanner!" : "Toggle to activate scanner!";
-})
-
 
 function onDetect(detectedCodes: {rawValue: string}[]) {
     const value = detectedCodes[0].rawValue;
