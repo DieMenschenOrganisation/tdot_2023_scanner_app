@@ -5,3 +5,7 @@ $dark-mode-white: #EEEEEE;
 
 $custom-success: #A2C579;
 $custom-danger: #C63D2F;
+
+:root {
+  --bounding-box: #{$dark-mode-blue}
+}

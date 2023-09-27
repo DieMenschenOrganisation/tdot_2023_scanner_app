@@ -2,6 +2,9 @@
 import {ref, Ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
 import { QrcodeStream } from 'vue-qrcode-reader'
+import variables from "@/assets/variables.scss"
+
+const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
 
 const toastStore = useToastStore();
 
@@ -42,8 +45,8 @@ function paintBoundingBox(detectedCodes, ctx) {
             boundingBox: { x, y, width, height }
         } = detectedCode
 
-        ctx.lineWidth = 2
-        ctx.strokeStyle = '#007bff'
+        ctx.lineWidth = 3
+        ctx.strokeStyle = boundingBox
         ctx.strokeRect(x, y, width, height)
     }
 }
