@@ -13,7 +13,7 @@ function add() {
     if (Math.random() > 0.5) {
         useToastStore().addNotification(
             "info",
-            "This is a test info!",
+            "This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test ",
         )
     } else {
         useToastStore().addNotification(

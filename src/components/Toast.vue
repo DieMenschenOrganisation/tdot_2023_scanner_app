@@ -18,6 +18,6 @@ const isError = computed(() => {
 
 <style scoped lang="scss">
 .notification {
-    height: 40px;
+    min-height: 40px;
 }
 </style>
