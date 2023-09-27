@@ -2,13 +2,16 @@
 import {ref, Ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
 import { QrcodeStream } from 'vue-qrcode-reader'
-import variables from "@/assets/variables.scss"
 
 const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
 
 const toastStore = useToastStore();
 
-const isChecked: Ref<boolean> = ref(false);
+const isLoading = ref(true);
+
+function onCamera() {
+    isLoading.value = false;
+}
 
 function onDetect(detectedCodes: {rawValue: string}[]) {
     const value = detectedCodes[0].rawValue;
@@ -17,6 +20,7 @@ function onDetect(detectedCodes: {rawValue: string}[]) {
 }
 
 const onError = err => {
+    toastStore.addNotification("error", err);
     let error;
     if (err.name === 'NotAllowedError') {
         error = 'you need to grant camera access permission'
@@ -54,7 +58,11 @@ function paintBoundingBox(detectedCodes, ctx) {
 
 <template>
     <div id="scanner" class="position-absolute top-50 start-50 translate-middle d-flex flex-column border border-4 border-primary rounded-5 overflow-hidden">
-        <qrcode-stream @detect="onDetect" @error="onError" :track="paintBoundingBox"/>
+        <qrcode-stream @detect="onDetect" @camera-on="onCamera" @error="onError" :track="paintBoundingBox">
+            <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                <h1 class="loading-indicator" v-if="isLoading">Loading...</h1>
+            </div>
+        </qrcode-stream>
     </div>
 </template>
 
