@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import {ref, Ref} from "vue";
+import {ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
 import { QrcodeStream } from 'vue-qrcode-reader'
+import {useRouter} from "vue-router";
+
+if (localStorage.getItem("userID") === null) useRouter().push("register");
 
 const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
 

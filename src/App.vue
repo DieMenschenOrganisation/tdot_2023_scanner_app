@@ -1,41 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import {useToastStore} from "@/stores/toastStore";
 import ToastList from "@/components/ToastList.vue";
-import {onUnmounted} from "vue";
+import {onUnmounted, provide} from "vue";
+
+provide("backendIP", "http://localhost:8000/");
 
 useToastStore().startUpdater();
 
 onUnmounted(() => {
-    console.log(useToastStore().stopUpdater())
+    useToastStore().stopUpdater();
 })
-
-function add() {
-    if (Math.random() > 0.5) {
-        useToastStore().addNotification(
-            "info",
-            "This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test info!This is a test ",
-        )
-    } else {
-        useToastStore().addNotification(
-            "error",
-            "This is a test error!",
-        )
-    }
-}
 </script>
 
 <template>
     <main>
         <ToastList></ToastList>
-        <button id="btn" @click="add">add</button>
         <router-view></router-view>
     </main>
 </template>
-
-<style scoped>
-#btn {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-</style>

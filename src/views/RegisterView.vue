@@ -1,10 +1,26 @@
 <script setup lang="ts">
-import {ref, type Ref} from "vue";
+import {inject, ref, type Ref} from "vue";
+import axios from "axios";
+import {useToastStore} from "@/stores/toastStore";
+import {useRouter} from "vue-router";
 
+const toastStore = useToastStore();
+
+const router = useRouter();
+if (localStorage.getItem("userID") !== null) router.push("scanner");
+
+const backendIP = inject("backendIP");
 const name: Ref<string> = ref("");
 
 function handleSubmit(): void {
-    console.log("submit", name)
+    axios.post(backendIP+"user/", { name: name.value }).then((response) => {
+        localStorage.setItem("userID", response.data);
+        toastStore.addNotification("info", "Account wurde angelegt!")
+        router.push("scanner")
+    }).catch(reason => {
+        console.log(reason)
+        toastStore.addNotification("error", reason.response.data)
+    })
 }
 
 </script>
