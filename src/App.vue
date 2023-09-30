@@ -3,10 +3,7 @@ import {useToastStore} from "@/stores/toastStore";
 import ToastList from "@/components/ToastList.vue";
 import {onUnmounted, provide} from "vue";
 
-const backendAddress = import.meta.env.VITE_BACKEND_IP + ":" + import.meta.env.VITE_BACKEND_PORT + "/";
-console.log(backendAddress)
-
-provide("backendIP", backendAddress);
+provide("backendIP", "https://94.16.122.175:8000/");
 
 useToastStore().startUpdater();
 
