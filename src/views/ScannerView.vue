@@ -32,7 +32,7 @@ function onDetect(detectedCodes: {rawValue: string}[]) {
 
     axios.get(backendIP+`scan/canRedeem/${userID}&${qrID}`).then(() => {
         axios.get(backendIP+`scan/redeem/${userID}&${qrID}`).then(response => {
-            toastStore.addNotification("info", `Es wurden ${response.data} Punkte zu ihrem Konto hinzugefügt!`)
+            toastStore.addNotification("info", `Ihrem Konto wurden ${response.data} Punkte hinzugefügt!`)
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
