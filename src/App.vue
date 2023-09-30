@@ -3,7 +3,7 @@ import {useToastStore} from "@/stores/toastStore";
 import ToastList from "@/components/ToastList.vue";
 import {onUnmounted, provide} from "vue";
 
-provide("backendIP", "http://localhost:8000/");
+provide("backendIP", "https://localhost:8000/");
 
 useToastStore().startUpdater();
 

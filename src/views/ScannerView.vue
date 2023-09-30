@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {inject, ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
 import { QrcodeStream } from 'vue-qrcode-reader'
 import {useRouter} from "vue-router";
+import axios from "axios";
 
-if (localStorage.getItem("userID") === null) useRouter().push("register");
+const userID = localStorage.getItem("userID");
+if (userID === null) useRouter().push("register");
+
+const backendIP = inject("backendIP");
 
 const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
 
@@ -19,7 +23,22 @@ function onCamera() {
 function onDetect(detectedCodes: {rawValue: string}[]) {
     const value = detectedCodes[0].rawValue;
 
-    toastStore.addNotification("info", `Scanned QR-Code: ${value}`)
+    const [type, qrID] = value.split("/");
+
+    if (type !== "redeem") {
+        toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
+        return;
+    }
+
+    axios.get(backendIP+`scan/canRedeem/${userID}&${qrID}`).then(() => {
+        axios.get(backendIP+`scan/redeem/${userID}&${qrID}`).then(response => {
+            toastStore.addNotification("info", `Es wurden ${response.data} Punkte zu ihrem Konto hinzugefügt!`)
+        }).catch(reason => {
+            toastStore.addNotification("error", reason.response.data);
+        })
+    }).catch(reason => {
+        toastStore.addNotification("error", reason.response.data);
+    })
 }
 
 const onError = err => {
