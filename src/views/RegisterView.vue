@@ -5,10 +5,11 @@ import {useToastStore} from "@/stores/toastStore";
 import {useRouter} from "vue-router";
 
 const toastStore = useToastStore();
-toastStore.addNotification("error", "Bitte keinen privaten Tab verwenden, da es dadurch zu verlust Ihres Kontos kommen könnte!")
 
 const router = useRouter();
 if (localStorage.getItem("userID") !== null) router.push("scanner");
+
+toastStore.addNotification("error", "Bitte keinen privaten Tab verwenden, da es dadurch zu verlust Ihres Kontos kommen könnte!")
 
 const backendIP = inject("backendIP");
 const name: Ref<string> = ref("");
