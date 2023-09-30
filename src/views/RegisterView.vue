@@ -21,7 +21,7 @@ function handleSubmit(): void {
         router.push("scanner")
     }).catch(reason => {
         console.log(reason)
-        toastStore.addNotification("error", reason.response.data)
+        toastStore.addNotification("error", reason)
     })
 }
 
