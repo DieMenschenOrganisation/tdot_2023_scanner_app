@@ -5,14 +5,15 @@ import { QrcodeStream } from 'vue-qrcode-reader'
 import {useRouter} from "vue-router";
 import axios from "axios";
 
-const userID = localStorage.getItem("userID");
-if (userID === null) useRouter().push("register");
 const backendIP = inject("backendIP");
+const router = useRouter();
 const toastStore = useToastStore();
-axios.get(backendIP+"user/"+userID).catch(reason => {
+
+const userID = localStorage.getItem("userID");
+axios.get(backendIP+"user/"+userID).catch(async reason => {
     toastStore.addNotification("error", reason)
     localStorage.removeItem("userID")
-    useRouter().push("register");
+    await router.push("register");
 })
 
 const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
