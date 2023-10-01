@@ -7,12 +7,16 @@ import axios from "axios";
 
 const userID = localStorage.getItem("userID");
 if (userID === null) useRouter().push("register");
-
 const backendIP = inject("backendIP");
+const toastStore = useToastStore();
+axios.get(backendIP+"user/"+userID).catch(reason => {
+    toastStore.addNotification("error", reason)
+    localStorage.removeItem("userID")
+    useRouter().push("register");
+})
 
 const boundingBox = getComputedStyle(document.documentElement).getPropertyValue("--bounding-box");
 
-const toastStore = useToastStore();
 
 const isLoading = ref(true);
 
