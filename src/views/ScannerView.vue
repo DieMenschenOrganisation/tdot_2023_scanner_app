@@ -11,7 +11,7 @@ const toastStore = useToastStore();
 
 const userID = localStorage.getItem("userID");
 axios.get(backendIP+"user/"+userID).catch(async reason => {
-    toastStore.addNotification("error", reason)
+    toastStore.addNotification("error", reason.response.data)
     localStorage.removeItem("userID")
     await router.push("register");
 })

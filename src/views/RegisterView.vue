@@ -20,8 +20,7 @@ function handleSubmit(): void {
         toastStore.addNotification("info", "Account wurde angelegt!")
         router.push("scanner")
     }).catch(reason => {
-        console.log(reason)
-        toastStore.addNotification("error", reason)
+        toastStore.addNotification("error", reason.response.data)
     })
 }
 
