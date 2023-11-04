@@ -44,7 +44,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         })
         return;
     } else if (type === "notify") {
-        axios.get(backendIP + `notify?userID=${userID}&code=${qrValue}`).then(() => {
+        axios.get(backendIP + `request?userID=${userID}&code=${qrValue}`).then(() => {
             toastStore.addNotification("info", "Erfolgreich gescannt!");
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
