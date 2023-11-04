@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {useToastStore} from "@/stores/toastStore";
-import { QrcodeStream } from 'vue-qrcode-reader'
+import {QrcodeStream} from 'vue-qrcode-reader'
 import {useRouter} from "vue-router";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ const router = useRouter();
 const toastStore = useToastStore();
 
 const userID = localStorage.getItem("userID");
-axios.get(backendIP+"user/"+userID).catch(async reason => {
+axios.get(backendIP + "user/" + userID).catch(async reason => {
     toastStore.addNotification("error", reason.response.data)
     localStorage.removeItem("userID")
     await router.push("register");
@@ -25,25 +25,32 @@ function onCamera() {
     isLoading.value = false;
 }
 
-function onDetect(detectedCodes: {rawValue: string}[]) {
+function onDetect(detectedCodes: { rawValue: string }[]) {
     const value = detectedCodes[0].rawValue;
 
-    const [type, qrID] = value.split("/");
+    const [type, qrValue] = value.split("/");
 
-    if (type !== "redeem") {
-        toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
-        return;
-    }
-
-    axios.get(backendIP+`scan/canRedeem/${userID}&${qrID}`).then(() => {
-        axios.get(backendIP+`scan/redeem/${userID}&${qrID}`).then(response => {
-            toastStore.addNotification("info", `Ihrem Konto wurden ${response.data} Punkte hinzugefügt!`)
+    if (type === "redeem") {
+        axios.get(backendIP + `scan/canRedeem/${userID}&${qrValue}`).then(() => {
+            axios.get(backendIP + `scan/redeem/${userID}&${qrValue}`).then(response => {
+                toastStore.addNotification("info", `Ihrem Konto wurden ${response.data} Punkte hinzugefügt!`)
+            }).catch(reason => {
+                toastStore.addNotification("error", reason.response.data);
+            })
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
-    }).catch(reason => {
-        toastStore.addNotification("error", reason.response.data);
-    })
+        return;
+    } else if (type === "notify") {
+        axios.get(backendIP + `notify?userID=${userID}&code=${qrValue}`).then(() => {
+            toastStore.addNotification("info", "Erfolgreich gescannt!");
+        }).catch(reason => {
+            toastStore.addNotification("error", reason.response.data);
+        })
+    }
+
+    toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
+
 }
 
 const onError = err => {
@@ -73,7 +80,7 @@ const onError = err => {
 function paintBoundingBox(detectedCodes, ctx) {
     for (const detectedCode of detectedCodes) {
         const {
-            boundingBox: { x, y, width, height }
+            boundingBox: {x, y, width, height}
         } = detectedCode
 
         ctx.lineWidth = 3
@@ -84,7 +91,8 @@ function paintBoundingBox(detectedCodes, ctx) {
 </script>
 
 <template>
-    <div id="scanner" class="position-absolute top-50 start-50 translate-middle d-flex flex-column border border-4 border-primary rounded-5 overflow-hidden">
+    <div id="scanner"
+         class="position-absolute top-50 start-50 translate-middle d-flex flex-column border border-4 border-primary rounded-5 overflow-hidden">
         <qrcode-stream @detect="onDetect" @camera-on="onCamera" @error="onError" :track="paintBoundingBox">
             <div class="w-100 h-100 d-flex justify-content-center align-items-center">
                 <h1 class="loading-indicator" v-if="isLoading">Laden...</h1>
@@ -95,6 +103,7 @@ function paintBoundingBox(detectedCodes, ctx) {
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
+
 #scanner {
     width: min(75vw, 75vh);
     aspect-ratio: 1;
