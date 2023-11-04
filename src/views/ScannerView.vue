@@ -30,8 +30,6 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
 
     const [type, qrValue] = value.split("/");
 
-    toastStore.addNotification("info",type);
-
     if (type === "redeem") {
         axios.get(backendIP + `scan/canRedeem/${userID}&${qrValue}`).then(() => {
             axios.get(backendIP + `scan/redeem/${userID}&${qrValue}`).then(response => {
