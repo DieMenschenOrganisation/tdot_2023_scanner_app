@@ -49,6 +49,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
+        return;
     }
 
     toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
