@@ -28,7 +28,7 @@ function onCamera() {
 function onDetect(detectedCodes: { rawValue: string }[]) {
     const value = detectedCodes[0].rawValue;
 
-    const [type, qrValue] = value.split("/");
+    const [type, qrValue] = value.split("/", 1);
 
     if (type === "redeem") {
         axios.get(backendIP + `scan/canRedeem/${userID}&${qrValue}`).then(() => {
@@ -47,6 +47,9 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
+        return;
+    } else if (type === "redirect") {
+        window.location.href = qrValue;
         return;
     }
 
