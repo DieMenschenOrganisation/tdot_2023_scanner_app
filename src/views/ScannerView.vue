@@ -56,7 +56,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         })
         return;
     } else if (type === "redirect") {
-        window.location.href = qrValue;
+        // window.location.href = qrValue;
         return;
     }
 
