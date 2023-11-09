@@ -30,12 +30,9 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
 
     toastStore.addNotification("info", value);
 
-    toastStore.addNotification("info", ""+value.split("/", 1))
-    toastStore.addNotification("info", ""+value.split("/", 2))
-    toastStore.addNotification("info", ""+value.split("/", 3))
-    toastStore.addNotification("info", ""+value.split("/", 4))
-
-    const [type, qrValue] = value.split("/", 2);
+    const values = value.split("/");
+    const type = values[0];
+    const qrValue = values.splice(1).join("/");
 
     if (type === "redeem") {
         axios.get(backendIP + `scan/canRedeem/${userID}&${qrValue}`).then(() => {
@@ -47,21 +44,17 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
-        return;
     } else if (type === "notify") {
         axios.get(backendIP + `request?userID=${userID}&code=${qrValue}`).then(() => {
             toastStore.addNotification("info", "Erfolgreich gescannt!");
         }).catch(reason => {
             toastStore.addNotification("error", reason.response.data);
         })
-        return;
     } else if (type === "redirect") {
-        // window.location.href = qrValue;
-        return;
+        window.location.href = qrValue;
+    } else {
+        toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
     }
-
-    toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
-
 }
 
 const onError = err => {
