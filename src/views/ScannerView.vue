@@ -49,6 +49,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         })
         return;
     } else if (type === "redirect") {
+        toastStore.addNotification("info", qrValue);
         window.location.href = qrValue;
         return;
     }
