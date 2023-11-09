@@ -30,6 +30,11 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
 
     toastStore.addNotification("info", value);
 
+    toastStore.addNotification("info", ""+value.split("/", 1))
+    toastStore.addNotification("info", ""+value.split("/", 2))
+    toastStore.addNotification("info", ""+value.split("/", 3))
+    toastStore.addNotification("info", ""+value.split("/", 4))
+
     const [type, qrValue] = value.split("/", 2);
 
     if (type === "redeem") {
