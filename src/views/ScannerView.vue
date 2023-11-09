@@ -51,7 +51,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
             toastStore.addNotification("error", reason.response.data);
         })
     } else if (type === "redirect") {
-        window.location.href = qrValue;
+        window.location.href = qrValue + "?userID=" + userID;
     } else {
         toastStore.addNotification("error", "Ungültiger Qr-Code wurde eingescannt!")
     }
