@@ -30,10 +30,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
 
     toastStore.addNotification("info", value);
 
-    const [type, qrValue] = value.split("/", 1);
-
-    toastStore.addNotification("info", type);
-    toastStore.addNotification("info", qrValue);
+    const [type, qrValue] = value.split("/", 2);
 
     if (type === "redeem") {
         axios.get(backendIP + `scan/canRedeem/${userID}&${qrValue}`).then(() => {
@@ -55,7 +52,7 @@ function onDetect(detectedCodes: { rawValue: string }[]) {
         return;
     } else if (type === "redirect") {
         toastStore.addNotification("info", qrValue);
-        // window.location.href = qrValue;
+        window.location.href = qrValue;
         return;
     }
 
