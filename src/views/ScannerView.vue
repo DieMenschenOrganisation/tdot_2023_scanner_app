@@ -28,8 +28,6 @@ function onCamera() {
 function onDetect(detectedCodes: { rawValue: string }[]) {
     const value = detectedCodes[0].rawValue;
 
-    toastStore.addNotification("info", value);
-
     const values = value.split("/");
     const type = values[0];
     const qrValue = values.splice(1).join("/");
